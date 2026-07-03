@@ -1,0 +1,94 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: RoomKeyPMS
+providerId: roomkeypms
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Hospitality
+- Hotel Technology
+- PMS
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of RoomKeyPMS. RoomKeyPMS is contract-priced SaaS (quote-based,
+  sized by property/room count and modules enabled) rather than a
+  usage-metered API - the REST API (Reservation Data, POS, Statistics) is
+  bundled into the property's platform subscription with no separately
+  published per-call or per-token rate. The dominant cost lens for a hotel is
+  therefore the platform subscription plus optional add-ons (Pulse AI
+  marketing, Embedded Payments processing fees, Capital financing, additional
+  supported interfaces such as PBX/POS/door-lock connectors, some of which
+  carry their own vendor fees per RoomKeyPMS's supported-interfaces
+  documentation). No numeric vendor rates are reconciled here.
+notes: >-
+  RoomKeyPMS does not publish public per-unit pricing for the platform or the
+  API. Verify current packaging and any integration-specific fees with
+  RoomKeyPMS sales/support. This file models the cost/allocation shape, not
+  confirmed invoice line items.
+sources:
+- https://roomkeypms.com/pricing/
+- https://roomkeypms.com/roomkeypms-rest-api/
+- https://support.roomkeypms.com/a/518974-supported-interfaces-for-roomkeypms
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: RoomKeyPMS
+serviceCategory: Hospitality Property Management System
+billingModel:
+  pricingCategory: Subscription / Contract
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: RoomKeyPMS
+  ServiceCategory: Hospitality Technology
+  ProviderName: RoomKeyPMS
+  PublisherName: RoomKeyPMS
+  InvoiceIssuerName: RoomKeyPMS
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: platform_subscription
+  description: Contract-priced PMS subscription, sized by property/room count and modules enabled. Not usage-metered per API call.
+  unit: contract
+  aggregation: flat
+  dimensions:
+  - property
+  - modules
+- name: third_party_interface_fees
+  description: Optional per-vendor fees for supported interfaces (PBX, POS, door locks, channel managers, WiFi, RMS, reputation platforms) documented as sometimes carrying additional cost beyond the base PMS.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - property
+  - interface_vendor
+- name: payment_processing_volume
+  description: Transaction volume processed through RoomKeyPMS Payments (USA) or Stripe (Canada/Australia) for guest folio charges, including those posted via the POS API.
+  unit: currency
+  aggregation: sum
+  dimensions:
+  - property
+  - payment_method
+principles:
+- name: Visibility
+  description: Use the Reservation Data and Statistics (Receipts) APIs to surface reservation, occupancy, and transaction activity per property for cost and revenue reporting.
+- name: Allocation
+  description: Map platform subscription and interface fees to individual properties in a multi-property/chain deployment.
+- name: Optimization
+  description: Consolidate supported interfaces where possible to avoid stacking multiple third-party integration fees on top of the base PMS subscription.
+- name: Accountability
+  description: Confirm with RoomKeyPMS sales whether API access, additional interfaces, or Capital financing carry incremental charges before committing a property to them.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

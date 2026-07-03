@@ -1,0 +1,129 @@
+aid: roomkeypms
+url: https://raw.githubusercontent.com/api-evangelist/roomkeypms/refs/heads/main/apis.yml
+name: RoomKeyPMS
+kind: company
+description: RoomKeyPMS is a cloud property management system (PMS) for independent
+  hotels and small chains across the US and Canada, with a team of hoteliers behind
+  roughly 70,000 managed rooms. Alongside the core PMS it sells Pulse (AI marketing
+  and guest messaging), Embedded Payments, Capital (growth financing), Mobile Guest,
+  a built-in Distribution/CRS module, and an integrations marketplace. RoomKeyPMS
+  publishes a real REST API (JSON or XML, selectable via request header) documented
+  publicly at its support portal under three API types - Pulling Reservation Data,
+  POS, and Statistics and Forecasts. The API is described as "a one-way interface
+  that allows you to draw out key data from your hotel or chain environment" for
+  use in marketing (e.g. exporting guest lists to MailChimp) and BI tools (e.g.
+  Cvent). It is partner-gated - a hotel's IT team must email RoomKeyPMS support and
+  the property must sign off before an API key and per-hotel credentials are issued
+  - so no open self-serve signup or public sandbox exists. Endpoint paths and query
+  parameters below are taken directly from RoomKeyPMS's own published support
+  articles; the exact API base host is inferred from the same documentation
+  (RoomKeyPMS hosts its interactive Help/reference pages alongside the live API)
+  and should be confirmed once credentials are issued.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Hospitality
+- Hotel Technology
+- Property Management System
+- PMS
+- Reservations
+- POS
+- Gated API
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: roomkeypms:roomkeypms-reservation-data-api
+  name: RoomKeyPMS Reservation Data API
+  tags:
+  - Reservations
+  - Guest Profiles
+  - In-House
+  - Cancellations
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data
+  baseURL: https://www.welcometorsi.net/RoomkeyApi/api
+  properties:
+  - url: https://support.roomkeypms.com/a/972656-api-documentation
+    type: Documentation
+  - url: https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data
+    type: APIReference
+  - url: openapi/roomkeypms-openapi.yml
+    type: OpenAPI
+  description: Pull reservation and guest-profile data by hotel - arrival-based
+    reservations, real-time in-house guests, checked-out guests, cancellations,
+    and reserved-but-not-yet-arrived bookings - each guest record including name,
+    address, email preferences, length of stay, booking source, room/rate, and
+    (since API v2.8.0.2) confirmation numbers from OTA/channel integration
+    partners (Booking.com, Expedia, TravelClick, SynXis, and others). GET requests
+    take a key (API key), fromDate, and toDate; date-ranged endpoints are capped
+    at 60 days and RoomKeyPMS recommends polling every 10-15 minutes without
+    parallel or overlapping calls. There is no delta/changed-records-only endpoint.
+- aid: roomkeypms:roomkeypms-pos-integration-api
+  name: RoomKeyPMS POS Integration API
+  tags:
+  - POS
+  - Folio
+  - Room Charges
+  - Guest Lookup
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://support.roomkeypms.com/a/1687788-api-type-pos
+  baseURL: https://www.welcometorsi.net/RoomkeyApi/api
+  properties:
+  - url: https://support.roomkeypms.com/a/972656-api-documentation
+    type: Documentation
+  - url: https://support.roomkeypms.com/a/1687788-api-type-pos
+    type: APIReference
+  - url: openapi/roomkeypms-openapi.yml
+    type: OpenAPI
+  description: Lets a third-party point-of-sale system (restaurant, retail, spa)
+    look up a guest by room number and post a charge to that guest's folio as a
+    room charge, so on-property spend outside the PMS lands on the guest's bill.
+    Room lookup returns guest/room status; charge posting requires a configured
+    CostCentre per property and is subject to per-guest credit-limit and
+    payment-method rules set in RoomKeyPMS. The in-house guest list endpoint is
+    shared with the Reservation Data API and is commonly used to validate a
+    room/guest pairing before posting a charge.
+- aid: roomkeypms:roomkeypms-statistics-api
+  name: RoomKeyPMS Statistics and Forecasts API
+  tags:
+  - Statistics
+  - Receipts
+  - ADR
+  - Occupancy
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://support.roomkeypms.com/m/55959/c/261470
+  baseURL: https://www.welcometorsi.net/RoomkeyApi/api
+  properties:
+  - url: https://support.roomkeypms.com/a/972656-api-documentation
+    type: Documentation
+  - url: https://support.roomkeypms.com/m/55959/c/261470
+    type: APIReference
+  - url: openapi/roomkeypms-openapi.yml
+    type: OpenAPI
+  description: Exposes hotel-level statistics for business-intelligence use -
+    RoomKeyPMS's own documentation describes ADR (average daily rate), occupancy,
+    and chain-receipt/transaction data as available through this API type. The
+    only sub-path confirmed in RoomKeyPMS's public release notes is the receipts
+    endpoint, which returns transaction records (date, amount, details, and a
+    transaction time) for a hotel over a date range; RoomKeyPMS's own product
+    page frames this data as feeding revenue-management and BI tools such as
+    Cvent. Exact sub-paths for the broader ADR/occupancy/forecast statistics
+    beyond receipts are described in marketing copy but not reproduced in
+    public support articles, so only the receipts endpoint is listed below
+    (endpointsModeled for ADR/occupancy/forecast beyond receipts).
+common:
+- type: LinkedIn
+  url: https://ca.linkedin.com/company/roomkeypms
+- type: Website
+  url: https://roomkeypms.com/
+- type: Documentation
+  url: https://support.roomkeypms.com/a/972656-api-documentation
+- type: Plans
+  url: plans/roomkeypms-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/roomkeypms-rate-limits.yml
+- type: FinOps
+  url: finops/roomkeypms-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

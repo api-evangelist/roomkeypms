@@ -1,0 +1,133 @@
+aid: roomkeypms
+name: RoomKeyPMS
+review:
+  question: Does RoomKeyPMS expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  accessModel: >-
+    Partner-gated REST API. RoomKeyPMS's support portal publicly documents the
+    API's purpose, endpoint paths, parameters, and polling guidance, but issuing
+    an API key requires a hotel's IT team to email RoomKeyPMS support and the
+    property to sign off - there is no open self-serve signup, public sandbox,
+    or published API key exchange. Responses can be requested as JSON or XML
+    via the request header. There is no endpoint that returns only records
+    changed since the last call, so integrators must poll full-window queries
+    on a schedule.
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. RoomKeyPMS's documented API surface is
+    exclusively request/response REST over HTTPS (JSON or XML). No
+    Server-Sent Events, long-polling, or WebSocket transport is documented
+    anywhere in RoomKeyPMS's public support articles, release notes, or
+    product marketing, so there is no server-push surface to model.
+findings:
+  summary: |
+    RoomKeyPMS does not publish a documented public WebSocket API. RoomKeyPMS
+    is a hotel property management system (PMS) for independent hotels and
+    small chains. It publishes a real REST API - organized around resource
+    URLs and standard HTTP verbs, returning JSON or XML - documented publicly
+    at support.roomkeypms.com under three API types: Pulling Reservation Data,
+    POS, and Statistics and Forecasts. Confirmed endpoint paths, parameters,
+    and HTTP methods are published in RoomKeyPMS's own support articles and
+    version release notes (as recently as API v2.8.0.2, March 2024). Access is
+    partner-gated: an API key and per-hotel credentials are issued only after
+    a hotel's IT team emails RoomKeyPMS support and the property signs off,
+    and RoomKeyPMS's API Terms and Conditions describe a limited, revocable
+    license routed through a Rackspace-hosted gateway in San Diego. No
+    realtime, bidirectional, or streaming WebSocket (ws:// or wss://) endpoint
+    is documented anywhere in RoomKeyPMS's public API documentation, release
+    notes, or terms.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://www.welcometorsi.net/RoomkeyApi/api
+      documented: true
+      note: >-
+        Endpoint paths, parameters, and HTTP verbs are documented publicly.
+        The exact API base host is inferred from RoomKeyPMS's own Help/reference
+        portal (welcometorsi.net/RoomkeyApi) using standard ASP.NET Web API
+        convention (the Help pages mirror the live /api routes); RoomKeyPMS
+        does not publish the base URL as a standalone value, so this should be
+        confirmed once a partner API key is issued.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in RoomKeyPMS's API documentation, release notes, supported-interfaces page, or API terms and conditions as of the review date.
+  endpointsConfirmedReal:
+    - "GET /hotels/{hotelId}/reservations/guestprofile (params: key, fromDate, toDate; max 60-day range; arrival-date based)"
+    - "GET /hotels/{hotelId}/reservations/guestprofile/inhouse (params: key; real-time snapshot)"
+    - "GET /hotels/{hotelId}/reservations/guestprofile/checkedout (params: key, fromDate, toDate; max 60-day range)"
+    - "GET /hotels/{hotelId}/reservations/guestprofile/cancellations (params: key, fromDate, toDate)"
+    - "GET /hotels/{hotelId}/reservations/guestprofile/reserved (params: key, fromDate, toDate)"
+    - "GET /hotels/{hotelId}/guests/roominquiry (params: key, roomNumber)"
+    - "POST /hotels/{hotelId}/transactions/roomcharges (params: key; body: CostCentre and charge details)"
+    - "GET /hotels/{hotelId}/statistics/receipts (params: key, fromDate, toDate; adds ReservationUniqueID per channel-partner integration since v2.8.0.2)"
+  endpointsModeled: true
+  endpointsModeledNote: >-
+    All endpoints listed under endpointsConfirmedReal are taken directly from
+    RoomKeyPMS's own public support articles and version release notes - they
+    are not fabricated. The only modeled (not publicly path-confirmed) surface
+    is the broader ADR/occupancy/forecast statistics RoomKeyPMS's marketing
+    copy describes as part of "Statistics and Forecasts" beyond the confirmed
+    receipts endpoint; that sub-surface is flagged endpointsModeled in
+    apis.yml and no invented path is listed for it.
+  dataFormats: |
+    Clients choose JSON or XML via the request header. Dates and times are in
+    the local property timezone, which integrators must account for across
+    multi-property/multi-timezone chains.
+  pollingGuidance: |
+    RoomKeyPMS publicly recommends pulling data every 10 to 15 minutes, never
+    in parallel, and staggering calls across properties for multi-property
+    integrations. RoomKeyPMS reserves the right to disable an integration's
+    API access if its call pattern negatively affects server performance.
+    There is no delta/"changed since last call" endpoint, so integrators must
+    re-pull bounded date-range windows (max 60 days for date-ranged
+    reservation endpoints) on a schedule.
+  accessProcess: |
+    A hotel's IT team emails RoomKeyPMS support to request API access; the
+    hotel/property must sign off before RoomKeyPMS issues an API key and
+    property-specific credentials. No public self-serve signup, application
+    form, or sandbox is documented.
+sources:
+  - url: https://support.roomkeypms.com/a/972656-api-documentation
+    type: Documentation
+    note: Core API documentation - REST, resource-oriented URLs, HTTP verbs, JSON/XML via header, v2.8.0.1 as of this writing, no delta/changed-records endpoint, local property timezones.
+  - url: https://roomkeypms.com/roomkeypms-rest-api/
+    type: Documentation
+    note: Marketing/product description of the REST API as a "one-way interface" for statistics, transactions, receipts, guest profiles, reservations, room/rate, and availability data; access requires IT-team email request and hotel sign-off.
+  - url: https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data
+    type: APIReference
+    note: Confirms Checkedout, InHouse, Reservations, Cancellations, and Reserved endpoints under /hotels/{hotelId}/reservations/guestprofile/*, 60-day max range, 10-15 minute polling guidance, no parallel calls.
+  - url: https://support.roomkeypms.com/a/1687788-api-type-pos
+    type: APIReference
+    note: Confirms POS endpoints - room/guest inquiry, room-charge posting to folio, and per-property CostCentre configuration.
+  - url: https://support.roomkeypms.com/m/55959/c/261470
+    type: APIReference
+    note: Public API section index listing API Terms and Conditions, API Documentation, and the three API Type articles (POS, Statistics and Forecasts, Pulling Reservation Data).
+  - url: https://support.roomkeypms.com/a/1792176-roomkeypms-api-version-2-8-0-2-march-2024
+    type: Documentation
+    note: March 2024 release notes confirming the statistics/receipts endpoint and adding ReservationUniqueID (ShortCode/Name/ConfirmationNumber) across five reservation endpoints for 10 channel-partner integrations.
+  - url: https://support.roomkeypms.com/a/942509-api-terms-and-conditions
+    type: Documentation
+    note: API Terms and Conditions - limited, revocable, non-transferable license; customer responsible for credential handling; requests routed through a Rackspace-hosted gateway in San Diego; no resale/rebrand.
+  - url: https://support.roomkeypms.com/a/518974-supported-interfaces-for-roomkeypms
+    type: Documentation
+    note: Lists RoomKeyPMS's broader interface ecosystem (accounting, PBX, POS, payments, door locks, channel managers, WiFi, RMS, reputation) and references the API as a general integration path for web-based systems.
+  - url: https://roomkeypms.com/pricing/
+    type: Website
+    note: Pricing page groups example hotel sizes but publishes no numeric rates; drives to demo/quote request.
+  - url: https://ca.linkedin.com/company/roomkeypms
+    type: LinkedIn
+    note: Company page - ~70,000 rooms managed across the US and Canada, nearly 20 years in business.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or other server-push protocol surface exists on RoomKeyPMS's
+    own API; it is exclusively request/response REST (JSON/XML). No AsyncAPI
+    document was created. Logical APIs in apis.yml (Reservation Data, POS,
+    Statistics and Forecasts) use real endpoint paths and parameters sourced
+    directly from RoomKeyPMS's public support articles and release notes; the
+    narrow ADR/occupancy/forecast sub-surface beyond the confirmed receipts
+    endpoint is flagged endpointsModeled rather than given an invented path.

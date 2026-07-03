@@ -1,0 +1,71 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: RoomKeyPMS
+providerId: roomkeypms
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: true
+tags:
+- Hospitality
+- Hotel Technology
+- PMS
+- Rate Limiting
+- Polling
+- Gated API
+description: >-
+  RoomKeyPMS does not publish fixed numeric per-minute/per-day request quotas.
+  Instead it publishes operational polling guidance that functions as a de
+  facto rate limit: pull data every 10-15 minutes, never issue parallel calls,
+  and stagger calls across properties for multi-property integrations.
+  Date-ranged endpoints (Reservations, Checkedout, Cancellations, Reserved)
+  cap the fromDate/toDate window at 60 days. There is no endpoint that returns
+  only records changed since the last call, so integrators must re-pull
+  bounded windows on a schedule rather than consume a delta feed. RoomKeyPMS
+  reserves the right to disable an integration's API access outright if its
+  call pattern negatively affects server performance.
+notes: >-
+  Because these are documented operational guidelines rather than a published
+  numeric throttle (e.g. no stated requests-per-minute figure or 429 response
+  contract), treat the 10-15 minute polling cadence and 60-day window cap as
+  hard compliance requirements when designing an integration, not just
+  best-practice suggestions.
+sources:
+- https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data
+- https://support.roomkeypms.com/a/972656-api-documentation
+- https://support.roomkeypms.com/a/942509-api-terms-and-conditions
+responseCodes:
+  throttled: not published
+limits:
+- name: Polling Frequency
+  scope: integration
+  metric: requests
+  limit: every 10-15 minutes
+  notes: Documented recommended cadence for ongoing pulls against Reservation Data endpoints.
+- name: Date Range Window
+  scope: request
+  metric: days
+  limit: 60
+  notes: Maximum fromDate/toDate span for Reservations, Checkedout, Cancellations, and Reserved endpoints.
+- name: Parallel Calls
+  scope: integration
+  metric: concurrency
+  limit: 0 (no parallel calls)
+  notes: RoomKeyPMS documentation explicitly states calls should not be made in parallel.
+- name: Multi-Property Staggering
+  scope: account
+  metric: requests
+  limit: staggered, not simultaneous
+  notes: Integrations covering multiple properties must stagger calls rather than firing them concurrently.
+policies:
+- name: No Delta Endpoint
+  description: There is no endpoint capable of returning only records changed since the last call; integrators must re-pull bounded date-range windows.
+- name: Performance-Based Suspension
+  description: RoomKeyPMS reserves the right to disable an integration's API access if its call pattern negatively affects server performance, independent of any numeric quota.
+- name: Retry on Communication Errors
+  description: RoomKeyPMS's own guidance states retries should be implemented for times of communications issues.
+- name: Local Property Timezone
+  description: Dates and times are evaluated in the local property timezone, which matters for scheduling polling windows across multi-property, multi-timezone chains.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

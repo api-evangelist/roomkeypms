@@ -1,0 +1,90 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: RoomKeyPMS
+providerId: roomkeypms
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Hospitality
+- Hotel Technology
+- PMS
+- Plans
+description: >-
+  RoomKeyPMS does not publish self-serve, public list pricing for the PMS
+  platform or its API. Third-party review sites describe a "user-pay" /
+  custom-quote model sized by property, with pricing obtained by booking a
+  demo and speaking with sales; RoomKeyPMS's own pricing page groups
+  illustrative small/midsize/large-and-chain hotel examples but publishes no
+  numeric rates. The REST API itself is not a separately metered, price-listed
+  product - it is a feature of the platform granted to a property once its IT
+  team requests access and the hotel signs off; no API-specific fee is
+  documented. No numeric rates are reconciled here.
+notes: >-
+  Verify current packaging and pricing by requesting a demo/quote via
+  roomkeypms.com/pricing or by calling RoomKeyPMS sales. Confirm whether API
+  access carries any incremental fee once credentials are issued - none is
+  documented publicly as of the review date.
+sources:
+- https://roomkeypms.com/pricing/
+- https://roomkeypms.com/roomkeypms-rest-api/
+- https://support.roomkeypms.com/a/942509-api-terms-and-conditions
+- https://www.getapp.com/hospitality-travel-software/a/roomkeypms/pricing/
+plans:
+- id: roomkeypms-quote-based
+  name: RoomKeyPMS Platform (Quote-Based)
+  type: enterprise
+  description: >-
+    Contract-priced cloud PMS subscription, sized by property (small,
+    midsize, or large/chain examples are shown on the pricing page).
+    Packaging spans the core PMS, Pulse AI marketing/messaging, Embedded
+    Payments, Capital financing, Mobile Guest, and the built-in
+    Distribution/CRS module. Pricing is obtained by requesting a demo/quote.
+  entries:
+  - label: Platform Subscription
+    name: platform_subscription
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: US/Canada
+    unit: 1
+    price: contact sales for a quote
+    userMultiplied: false
+  elements:
+  - name: Core Cloud PMS
+  - name: Pulse AI Marketing and Guest Messaging
+  - name: Embedded Payments
+  - name: RoomKeyPMS Capital (Financing)
+  - name: Mobile Guest
+  - name: Built-In Distribution / CRS
+  - name: Integrations Marketplace
+  - name: REST API (Reservation Data, POS, Statistics) - account entitlement
+- id: roomkeypms-api-access
+  name: API Access (Partner-Gated, No Listed Fee)
+  type: enterprise
+  description: >-
+    API access is not a separate priced tier. Once a property's IT team
+    emails RoomKeyPMS support and the hotel signs off, RoomKeyPMS issues an
+    API key and per-hotel credentials for the Reservation Data, POS, and
+    Statistics API types at no separately documented fee. There is no public
+    self-serve signup or sandbox.
+  entries:
+  - label: API Key Issuance
+    name: api_key_issuance
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: US/Canada
+    unit: 1
+    price: no separately published fee (bundled with the property's platform subscription)
+    userMultiplied: false
+  elements:
+  - name: Pulling Reservation Data
+  - name: POS Integration
+  - name: Statistics and Forecasts (Receipts)
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
