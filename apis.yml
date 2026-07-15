@@ -112,6 +112,8 @@ apis:
     public support articles, so only the receipts endpoint is listed below
     (endpointsModeled for ADR/occupancy/forecast beyond receipts).
 common:
+- type: AgenticAccess
+  url: agentic-access/roomkeypms-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/roomkeypms-vulnerability-disclosure.yml
 - type: DomainSecurity
