@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  title: RoomKeyPMS POS API
+  description: 'RoomKeyPMS''s REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts. Endpoint paths, parameters, and behavior are taken directly from RoomKeyPMS''s public support documentation and version release notes. The API is partner-gated: an API key and per-hotel credentials are issued only after a hotel''s IT team emails RoomKeyPMS support and the property signs off. Responses can be requested as JSON or XML via the request header. There is no endpoint that returns only records changed since the last call; RoomKeyPMS recommends polling on a 10-15 minute cadence without parallel calls, staggered across properties for multi-property integrations. Date-ranged endpoints are capped at a 60-day window. The exact production base host is not published as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS''s own Help/reference portal and should be confirmed once a partner API key is issued.'
+  version: 2.8.0.2
+  contact:
+    name: RoomKeyPMS Support
+    url: https://support.roomkeypms.com/a/972656-api-documentation
+servers:
+- url: https://www.welcometorsi.net/RoomkeyApi/api
+  description: RoomKeyPMS production API (base host inferred from the public Help/reference portal; confirm with issued credentials)
+security:
+- apiKeyAuth: []
+tags:
+- name: POS
+  description: Point-of-sale guest lookup and folio charge posting.
+paths:
+  /hotels/{hotelId}/reservations/guestprofile/inhouse:
+    get:
+      operationId: listInHouseGuests
+      tags:
+      - POS
+      summary: List currently in-house guests
+      description: Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge.
+      parameters:
+      - $ref: '#/components/parameters/HotelId'
+      - $ref: '#/components/parameters/ApiKeyParam'
+      responses:
+        '200':
+          description: A list of in-house guests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/guests/roominquiry:
+    get:
+      operationId: roomInquiry
+      tags:
+      - POS
+      summary: Look up guest/room status for POS
+      description: Returns guest and room status for a given room number, for use by a point-of-sale system before posting a charge.
+      parameters:
+      - $ref: '#/components/parameters/HotelId'
+      - $ref: '#/components/parameters/ApiKeyParam'
+      - name: roomNumber
+        in: query
+        required: true
+        description: The room number to look up.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Guest/room status for the requested room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomInquiry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/transactions/roomcharges:
+    post:
+      operationId: postRoomCharge
+      tags:
+      - POS
+      summary: Post a charge to a guest folio
+      description: Posts a point-of-sale charge to a guest's room folio. Each property configures its own CostCentres, and charges are subject to per-guest credit-limit and payment-method rules configured in RoomKeyPMS.
+      parameters:
+      - $ref: '#/components/parameters/HotelId'
+      - $ref: '#/components/parameters/ApiKeyParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomChargeInput'
+      responses:
+        '200':
+          description: The posted charge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomCharge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    ApiKeyParam:
+      name: key
+      in: query
+      required: true
+      description: API key for the requesting integration.
+      schema:
+        type: string
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
+  schemas:
+    RoomInquiry:
+      type: object
+      properties:
+        roomNumber:
+          type: string
+        guestName:
+          type: string
+        inHouse:
+          type: boolean
+        costCentresAvailable:
+          type: array
+          items:
+            type: string
+    ChannelConfirmation:
+      type: object
+      properties:
+        shortCode:
+          type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
+    RoomCharge:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        postedAt:
+          type: string
+          format: date-time
+    Reservation:
+      type: object
+      description: A reservation/guest-profile record. Field names are honestly modeled from RoomKeyPMS's documented data categories (guest profile, room and rate, booking source) since RoomKeyPMS's public articles describe the available data but do not publish a full field-level schema.
+      properties:
+        confirmationNumber:
+          type: string
+        guestName:
+          type: string
+        guestAddress:
+          type: string
+        guestEmail:
+          type: string
+        arrivalDate:
+          type: string
+          format: date
+        departureDate:
+          type: string
+          format: date
+        roomNumber:
+          type: string
+        roomType:
+          type: string
+        rateName:
+          type: string
+        baseRate:
+          type: number
+        bookingSource:
+          type: string
+        reservationUniqueId:
+          type: array
+          description: Channel-partner confirmation numbers, added in API v2.8.0.2.
+          items:
+            $ref: '#/components/schemas/ChannelConfirmation'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    RoomChargeInput:
+      type: object
+      required:
+      - roomNumber
+      - costCentre
+      - amount
+      properties:
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        description:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key issued by RoomKeyPMS after a hotel's IT team requests access and the property signs off.
