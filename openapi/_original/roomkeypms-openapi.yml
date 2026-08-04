@@ -1,0 +1,391 @@
+openapi: 3.0.3
+info:
+  title: RoomKeyPMS API
+  description: >-
+    RoomKeyPMS's REST API for pulling reservation and guest data, posting POS
+    charges to a guest folio, and pulling hotel statistics/receipts. Endpoint
+    paths, parameters, and behavior are taken directly from RoomKeyPMS's public
+    support documentation and version release notes. The API is partner-gated:
+    an API key and per-hotel credentials are issued only after a hotel's IT
+    team emails RoomKeyPMS support and the property signs off. Responses can be
+    requested as JSON or XML via the request header. There is no endpoint that
+    returns only records changed since the last call; RoomKeyPMS recommends
+    polling on a 10-15 minute cadence without parallel calls, staggered across
+    properties for multi-property integrations. Date-ranged endpoints are
+    capped at a 60-day window. The exact production base host is not published
+    as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS's
+    own Help/reference portal and should be confirmed once a partner API key is
+    issued.
+  version: '2.8.0.2'
+  contact:
+    name: RoomKeyPMS Support
+    url: https://support.roomkeypms.com/a/972656-api-documentation
+servers:
+  - url: https://www.welcometorsi.net/RoomkeyApi/api
+    description: RoomKeyPMS production API (base host inferred from the public Help/reference portal; confirm with issued credentials)
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Reservation Data
+    description: Pull reservation and guest-profile data by hotel.
+  - name: POS
+    description: Point-of-sale guest lookup and folio charge posting.
+  - name: Statistics
+    description: Hotel statistics and transaction receipts.
+paths:
+  /hotels/{hotelId}/reservations/guestprofile:
+    get:
+      operationId: listReservations
+      tags:
+        - Reservation Data
+      summary: List reservations by arrival date
+      description: >-
+        Returns reservations arriving within the given date range. Maximum
+        range is 60 days. RoomKeyPMS recommends narrow, frequent (10-15 minute)
+        polling windows for ongoing pulls rather than wide windows.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: A list of reservations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/reservations/guestprofile/inhouse:
+    get:
+      operationId: listInHouseGuests
+      tags:
+        - Reservation Data
+        - POS
+      summary: List currently in-house guests
+      description: Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+      responses:
+        '200':
+          description: A list of in-house guests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/reservations/guestprofile/checkedout:
+    get:
+      operationId: listCheckedOutGuests
+      tags:
+        - Reservation Data
+      summary: List checked-out guests
+      description: Returns guests checked out within the given date range. Maximum range is 60 days.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: A list of checked-out guests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/reservations/guestprofile/cancellations:
+    get:
+      operationId: listCancellations
+      tags:
+        - Reservation Data
+      summary: List cancelled reservations
+      description: Returns reservations cancelled within the given date range.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: A list of cancelled reservations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/reservations/guestprofile/reserved:
+    get:
+      operationId: listReservedNotArrived
+      tags:
+        - Reservation Data
+      summary: List reserved (not yet arrived) reservations
+      description: Returns reservations that are booked but whose guests have not yet arrived, within the given date range.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: A list of reserved, not-yet-arrived reservations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/guests/roominquiry:
+    get:
+      operationId: roomInquiry
+      tags:
+        - POS
+      summary: Look up guest/room status for POS
+      description: Returns guest and room status for a given room number, for use by a point-of-sale system before posting a charge.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - name: roomNumber
+          in: query
+          required: true
+          description: The room number to look up.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Guest/room status for the requested room.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomInquiry'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/transactions/roomcharges:
+    post:
+      operationId: postRoomCharge
+      tags:
+        - POS
+      summary: Post a charge to a guest folio
+      description: >-
+        Posts a point-of-sale charge to a guest's room folio. Each property
+        configures its own CostCentres, and charges are subject to per-guest
+        credit-limit and payment-method rules configured in RoomKeyPMS.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomChargeInput'
+      responses:
+        '200':
+          description: The posted charge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoomCharge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /hotels/{hotelId}/statistics/receipts:
+    get:
+      operationId: listReceipts
+      tags:
+        - Statistics
+      summary: List transaction receipts
+      description: >-
+        Returns transaction/receipt records for a hotel over a date range,
+        including a transaction time for each record. Since API v2.8.0.2,
+        reservation-linked records also carry a ReservationUniqueID array of
+        channel-partner confirmation numbers (ShortCode, Name,
+        ConfirmationNumber) for integrations such as Booking.com, Expedia,
+        SynXis, and TravelClick.
+      parameters:
+        - $ref: '#/components/parameters/HotelId'
+        - $ref: '#/components/parameters/ApiKeyParam'
+        - $ref: '#/components/parameters/FromDate'
+        - $ref: '#/components/parameters/ToDate'
+      responses:
+        '200':
+          description: A list of transaction receipts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Receipt'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: query
+      name: key
+      description: API key issued by RoomKeyPMS after a hotel's IT team requests access and the property signs off.
+  parameters:
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
+    ApiKeyParam:
+      name: key
+      in: query
+      required: true
+      description: API key for the requesting integration.
+      schema:
+        type: string
+    FromDate:
+      name: fromDate
+      in: query
+      required: true
+      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
+    ToDate:
+      name: toDate
+      in: query
+      required: true
+      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Reservation:
+      type: object
+      description: >-
+        A reservation/guest-profile record. Field names are honestly modeled
+        from RoomKeyPMS's documented data categories (guest profile, room and
+        rate, booking source) since RoomKeyPMS's public articles describe the
+        available data but do not publish a full field-level schema.
+      properties:
+        confirmationNumber:
+          type: string
+        guestName:
+          type: string
+        guestAddress:
+          type: string
+        guestEmail:
+          type: string
+        arrivalDate:
+          type: string
+          format: date
+        departureDate:
+          type: string
+          format: date
+        roomNumber:
+          type: string
+        roomType:
+          type: string
+        rateName:
+          type: string
+        baseRate:
+          type: number
+        bookingSource:
+          type: string
+        reservationUniqueId:
+          type: array
+          description: Channel-partner confirmation numbers, added in API v2.8.0.2.
+          items:
+            $ref: '#/components/schemas/ChannelConfirmation'
+    ChannelConfirmation:
+      type: object
+      properties:
+        shortCode:
+          type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
+    RoomInquiry:
+      type: object
+      properties:
+        roomNumber:
+          type: string
+        guestName:
+          type: string
+        inHouse:
+          type: boolean
+        costCentresAvailable:
+          type: array
+          items:
+            type: string
+    RoomChargeInput:
+      type: object
+      required:
+        - roomNumber
+        - costCentre
+        - amount
+      properties:
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        description:
+          type: string
+    RoomCharge:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        postedAt:
+          type: string
+          format: date-time
+    Receipt:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        transactionTime:
+          type: string
+          format: date-time
+        amount:
+          type: number
+        details:
+          type: string
+        reservationUniqueId:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelConfirmation'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string

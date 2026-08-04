@@ -1,0 +1,18 @@
+{
+  "provider": "roomkeypms",
+  "sources": [
+    "roomkeypms-pos-api-openapi.yml",
+    "roomkeypms-reservation-data-api-openapi.yml",
+    "roomkeypms-statistics-api-openapi.yml"
+  ],
+  "outputs": [
+    "roomkeypms-pos-api-openapi.yml",
+    "roomkeypms-reservation-data-api-openapi.yml",
+    "roomkeypms-statistics-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
