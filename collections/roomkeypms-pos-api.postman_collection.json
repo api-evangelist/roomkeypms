@@ -1,0 +1,584 @@
+{
+  "item": [
+    {
+      "id": "4ebf1aa1-c76f-456d-adec-83596a8a7f80",
+      "name": "POS",
+      "description": {
+        "content": "Point-of-sale guest lookup and folio charge posting.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b8973811-0d7f-48f4-a692-fe35b17a0b5f",
+          "name": "List currently in-house guests",
+          "request": {
+            "name": "List currently in-house guests",
+            "description": {
+              "content": "Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile",
+                "inhouse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3d87fcd4-afb2-40df-867c-531dd8939a5c",
+              "name": "A list of in-house guests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "inhouse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1984-07-13\",\n    \"departureDate\": \"1981-12-22\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 8565.57098047575,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"2013-10-28\",\n    \"departureDate\": \"2026-07-25\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 9303.440355837796,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c15eae4-a117-4004-97e2-a3e3a2b635fa",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "inhouse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57c96f37-cc56-4168-af45-e9e460fe8afd",
+          "name": "Look up guest/room status for POS",
+          "request": {
+            "name": "Look up guest/room status for POS",
+            "description": {
+              "content": "Returns guest and room status for a given room number, for use by a point-of-sale system before posting a charge.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "guests",
+                "roominquiry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "roomNumber",
+                  "value": "<string>",
+                  "description": "(Required) The room number to look up."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ff3c7860-a152-48cf-aac9-dc514d5d3ab9",
+              "name": "Guest/room status for the requested room.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "guests",
+                    "roominquiry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roomNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"roomNumber\": \"string\",\n  \"guestName\": \"string\",\n  \"inHouse\": true,\n  \"costCentresAvailable\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf4ee6de-b14a-4e51-b544-184fede9a542",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "guests",
+                    "roominquiry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "roomNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c42c0ad-139b-4c2a-8a18-a0d4cafd911f",
+          "name": "Post a charge to a guest folio",
+          "request": {
+            "name": "Post a charge to a guest folio",
+            "description": {
+              "content": "Posts a point-of-sale charge to a guest's room folio. Each property configures its own CostCentres, and charges are subject to per-guest credit-limit and payment-method rules configured in RoomKeyPMS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "transactions",
+                "roomcharges"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roomNumber\": \"<string>\",\n  \"costCentre\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e422a5f3-9f91-4706-868c-0ed220c0f7c8",
+              "name": "The posted charge.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "transactions",
+                    "roomcharges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"roomNumber\": \"<string>\",\n  \"costCentre\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionId\": \"string\",\n  \"roomNumber\": \"string\",\n  \"costCentre\": \"string\",\n  \"amount\": 430.1774796710922,\n  \"postedAt\": \"1955-01-16T18:53:30.318Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd04b7ed-d39d-421c-bf40-35ebb61e93b6",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "transactions",
+                    "roomcharges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"roomNumber\": \"<string>\",\n  \"costCentre\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.welcometorsi.net/RoomkeyApi/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d3183679-a70c-4d34-9963-a4f8785c28da",
+    "name": "RoomKeyPMS POS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RoomKeyPMS's REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts. Endpoint paths, parameters, and behavior are taken directly from RoomKeyPMS's public support documentation and version release notes. The API is partner-gated: an API key and per-hotel credentials are issued only after a hotel's IT team emails RoomKeyPMS support and the property signs off. Responses can be requested as JSON or XML via the request header. There is no endpoint that returns only records changed since the last call; RoomKeyPMS recommends polling on a 10-15 minute cadence without parallel calls, staggered across properties for multi-property integrations. Date-ranged endpoints are capped at a 60-day window. The exact production base host is not published as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS's own Help/reference portal and should be confirmed once a partner API key is issued.\n\nContact Support:\n Name: RoomKeyPMS Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RoomKeyPMS POS API",
+    "version": "2.8.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "POS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List currently in-house guests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile/inhouse",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              }
+            ]
+          },
+          "docs": "Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge."
+        },
+        {
+          "info": {
+            "name": "Look up guest/room status for POS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/guests/roominquiry",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "roomNumber",
+                "value": "",
+                "type": "query",
+                "description": "The room number to look up."
+              }
+            ]
+          },
+          "docs": "Returns guest and room status for a given room number, for use by a point-of-sale system before posting a charge."
+        },
+        {
+          "info": {
+            "name": "Post a charge to a guest folio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/transactions/roomcharges",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Posts a point-of-sale charge to a guest's room folio. Each property configures its own CostCentres, and charges are subject to per-guest credit-limit and payment-method rules configured in RoomKeyPMS."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

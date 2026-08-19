@@ -1,0 +1,240 @@
+{
+  "item": [
+    {
+      "id": "7c74b3ec-b606-4078-a29a-e73894ac32bf",
+      "name": "Statistics",
+      "description": {
+        "content": "Hotel statistics and transaction receipts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "934a5bef-a8ba-4ff9-9c25-a02bd6b594d3",
+          "name": "List transaction receipts",
+          "request": {
+            "name": "List transaction receipts",
+            "description": {
+              "content": "Returns transaction/receipt records for a hotel over a date range, including a transaction time for each record. Since API v2.8.0.2, reservation-linked records also carry a ReservationUniqueID array of channel-partner confirmation numbers (ShortCode, Name, ConfirmationNumber) for integrations such as Booking.com, Expedia, SynXis, and TravelClick.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "statistics",
+                "receipts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c751a43-1347-418d-b1b9-f0bd1c73e57a",
+              "name": "A list of transaction receipts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "statistics",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"transactionId\": \"string\",\n    \"transactionTime\": \"2016-09-07T08:59:21.023Z\",\n    \"amount\": 8946.876666446582,\n    \"details\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"transactionId\": \"string\",\n    \"transactionTime\": \"2021-05-05T21:27:17.842Z\",\n    \"amount\": 4226.449979332624,\n    \"details\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbe9d977-a16c-4b92-8cec-3c4758ba3b00",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "statistics",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.welcometorsi.net/RoomkeyApi/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7eba3862-a627-45c2-95d2-af04966d768e",
+    "name": "RoomKeyPMS POS Statistics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RoomKeyPMS's REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts. Endpoint paths, parameters, and behavior are taken directly from RoomKeyPMS's public support documentation and version release notes. The API is partner-gated: an API key and per-hotel credentials are issued only after a hotel's IT team emails RoomKeyPMS support and the property signs off. Responses can be requested as JSON or XML via the request header. There is no endpoint that returns only records changed since the last call; RoomKeyPMS recommends polling on a 10-15 minute cadence without parallel calls, staggered across properties for multi-property integrations. Date-ranged endpoints are capped at a 60-day window. The exact production base host is not published as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS's own Help/reference portal and should be confirmed once a partner API key is issued.\n\nContact Support:\n Name: RoomKeyPMS Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RoomKeyPMS POS Statistics API",
+    "version": "2.8.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Statistics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transaction receipts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/statistics/receipts",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+              }
+            ]
+          },
+          "docs": "Returns transaction/receipt records for a hotel over a date range, including a transaction time for each record. Since API v2.8.0.2, reservation-linked records also carry a ReservationUniqueID array of channel-partner confirmation numbers (ShortCode, Name, ConfirmationNumber) for integrations such as Booking.com, Expedia, SynXis, and TravelClick."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

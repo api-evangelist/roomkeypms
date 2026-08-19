@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "RoomKeyPMS POS Reservation Data API",
+    "version": "2.8.0.2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "key",
+      "value": "{{key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reservation Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List reservations by arrival date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+              }
+            ]
+          },
+          "docs": "Returns reservations arriving within the given date range. Maximum range is 60 days. RoomKeyPMS recommends narrow, frequent (10-15 minute) polling windows for ongoing pulls rather than wide windows."
+        },
+        {
+          "info": {
+            "name": "List currently in-house guests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile/inhouse",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              }
+            ]
+          },
+          "docs": "Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge."
+        },
+        {
+          "info": {
+            "name": "List checked-out guests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile/checkedout",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+              }
+            ]
+          },
+          "docs": "Returns guests checked out within the given date range. Maximum range is 60 days."
+        },
+        {
+          "info": {
+            "name": "List cancelled reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile/cancellations",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+              }
+            ]
+          },
+          "docs": "Returns reservations cancelled within the given date range."
+        },
+        {
+          "info": {
+            "name": "List reserved (not yet arrived) reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.welcometorsi.net/RoomkeyApi/api/hotels/:hotelId/reservations/guestprofile/reserved",
+            "params": [
+              {
+                "name": "hotelId",
+                "value": "",
+                "type": "path",
+                "description": "The RoomKeyPMS-assigned identifier for the hotel/property."
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "API key for the requesting integration."
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+              }
+            ]
+          },
+          "docs": "Returns reservations that are booked but whose guests have not yet arrived, within the given date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

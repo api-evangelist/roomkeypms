@@ -1,0 +1,988 @@
+{
+  "item": [
+    {
+      "id": "12d8d5d0-768c-4285-869d-ff9da9721764",
+      "name": "Reservation Data",
+      "description": {
+        "content": "Pull reservation and guest-profile data by hotel.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1bab1ba1-e6a7-4c7c-b16b-9675e45f6552",
+          "name": "List reservations by arrival date",
+          "request": {
+            "name": "List reservations by arrival date",
+            "description": {
+              "content": "Returns reservations arriving within the given date range. Maximum range is 60 days. RoomKeyPMS recommends narrow, frequent (10-15 minute) polling windows for ongoing pulls rather than wide windows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2dc1670e-90f8-420c-976e-62043e2e1187",
+              "name": "A list of reservations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1951-01-11\",\n    \"departureDate\": \"1984-06-03\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 3189.4094380856554,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1989-02-13\",\n    \"departureDate\": \"1967-09-06\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 5542.58242137008,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "848d639c-adde-4380-8be4-9d33da9edb7d",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfb6e2e7-5096-46fb-9499-4ca182635378",
+          "name": "List currently in-house guests",
+          "request": {
+            "name": "List currently in-house guests",
+            "description": {
+              "content": "Real-time snapshot of guests currently checked in at the property. Also used by POS integrations to validate a room/guest pairing before posting a charge.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile",
+                "inhouse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30ade021-0e71-4e9f-bc76-6b4a2474bc15",
+              "name": "A list of in-house guests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "inhouse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1958-10-29\",\n    \"departureDate\": \"2008-04-22\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 2016.5469969959881,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1981-04-03\",\n    \"departureDate\": \"1985-02-05\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 4563.124174413005,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5a4700e-4c66-4606-8c7e-6337f82ce52a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "inhouse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ecb5d05-a93f-44e3-8c10-c8578c4ed1ec",
+          "name": "List checked-out guests",
+          "request": {
+            "name": "List checked-out guests",
+            "description": {
+              "content": "Returns guests checked out within the given date range. Maximum range is 60 days.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile",
+                "checkedout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1b85ae3-ea6e-4d5c-ab6d-b9a35bda80ac",
+              "name": "A list of checked-out guests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "checkedout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1958-10-29\",\n    \"departureDate\": \"2008-04-22\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 2016.5469969959881,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1981-04-03\",\n    \"departureDate\": \"1985-02-05\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 4563.124174413005,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59f41e27-ad00-4925-9eb8-0eedc644bed1",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "checkedout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbcefffa-7053-4fba-a3bb-117e41afa632",
+          "name": "List cancelled reservations",
+          "request": {
+            "name": "List cancelled reservations",
+            "description": {
+              "content": "Returns reservations cancelled within the given date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile",
+                "cancellations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4bad0888-8ea8-4fcb-ac30-9e0df7df12d1",
+              "name": "A list of cancelled reservations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "cancellations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1958-10-29\",\n    \"departureDate\": \"2008-04-22\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 2016.5469969959881,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1981-04-03\",\n    \"departureDate\": \"1985-02-05\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 4563.124174413005,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92e5ee6d-dd36-4303-b54d-77d61efe5ae0",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "cancellations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed6027c5-0c61-4722-83c7-c23f6985f2cd",
+          "name": "List reserved (not yet arrived) reservations",
+          "request": {
+            "name": "List reserved (not yet arrived) reservations",
+            "description": {
+              "content": "Returns reservations that are booked but whose guests have not yet arrived, within the given date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "hotels",
+                ":hotelId",
+                "reservations",
+                "guestprofile",
+                "reserved"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>",
+                  "description": "(Required) API key for the requesting integration."
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "(Required) Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "(Required) End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "hotelId",
+                  "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe6ab15c-db18-4d9d-a33a-9107820e1d77",
+              "name": "A list of reserved, not-yet-arrived reservations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "reserved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1958-10-29\",\n    \"departureDate\": \"2008-04-22\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 2016.5469969959881,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  },\n  {\n    \"confirmationNumber\": \"string\",\n    \"guestName\": \"string\",\n    \"guestAddress\": \"string\",\n    \"guestEmail\": \"string\",\n    \"arrivalDate\": \"1981-04-03\",\n    \"departureDate\": \"1985-02-05\",\n    \"roomNumber\": \"string\",\n    \"roomType\": \"string\",\n    \"rateName\": \"string\",\n    \"baseRate\": 4563.124174413005,\n    \"bookingSource\": \"string\",\n    \"reservationUniqueId\": [\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      },\n      {\n        \"shortCode\": \"BKG\",\n        \"name\": \"Booking.com\",\n        \"confirmationNumber\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "182eca01-3f87-49b0-8332-9feac1ea0e6c",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "hotels",
+                    ":hotelId",
+                    "reservations",
+                    "guestprofile",
+                    "reserved"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "hotelId",
+                      "description": "(Required) The RoomKeyPMS-assigned identifier for the hotel/property."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.welcometorsi.net/RoomkeyApi/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7045299f-9a4b-49a8-a3b4-a9062bab13e0",
+    "name": "RoomKeyPMS POS Reservation Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "RoomKeyPMS's REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts. Endpoint paths, parameters, and behavior are taken directly from RoomKeyPMS's public support documentation and version release notes. The API is partner-gated: an API key and per-hotel credentials are issued only after a hotel's IT team emails RoomKeyPMS support and the property signs off. Responses can be requested as JSON or XML via the request header. There is no endpoint that returns only records changed since the last call; RoomKeyPMS recommends polling on a 10-15 minute cadence without parallel calls, staggered across properties for multi-property integrations. Date-ranged endpoints are capped at a 60-day window. The exact production base host is not published as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS's own Help/reference portal and should be confirmed once a partner API key is issued.\n\nContact Support:\n Name: RoomKeyPMS Support",
+      "type": "text/plain"
+    }
+  }
+}
