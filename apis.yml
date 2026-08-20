@@ -39,6 +39,14 @@ tags:
 - Property Management System
 - PMS
 - Reservations
+- Point-of-Sale
+- Gated API
+tags_raw:
+- Hospitality
+- Hotel Technology
+- Property Management System
+- PMS
+- Reservations
 - POS
 - Gated API
 created: '2026-07-03'
@@ -51,6 +59,8 @@ apis:
   humanURL: https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data
   baseURL: https://www.welcometorsi.net/RoomkeyApi/api
   tags:
+  - Point-of-Sale
+  tags_raw:
   - POS
   properties:
   - type: OpenAPI
