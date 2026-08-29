@@ -122,6 +122,9 @@ apis:
   - type: APIReference
     url: https://support.roomkeypms.com/m/55959/c/261470
 common:
+- type: CapabilityMap
+  url: capabilities/roomkeypms-capability-edges.yml
+  name: RoomKeyPMS Business Capability Map
 - type: AgenticAccess
   url: agentic-access/roomkeypms-agentic-access.yml
 - type: VulnerabilityDisclosure

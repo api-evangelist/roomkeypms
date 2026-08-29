@@ -1,0 +1,39 @@
+slug: roomkeypms
+provider: RoomKeyPMS
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Travel & Hospitality
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Reservation Data
+  spec_file: roomkeypms-reservation-data-api-openapi.yml
+  capability_id: BC-4020
+  capability_id_l1: BC-4020
+  capability_name: Reservation & Booking Management
+  confidence: 0.8
+  evidence: GET /hotels/{hotelId}/reservations/guestprofile  listReservations  List reservations by arrival
+    date; GET .../cancellations  listCancellations  List cancelled reservations
+  reason: Operations expose hotel reservation records across their lifecycle states — reserved-not-arrived,
+    in-house, checked-out and cancelled — from a property management system. Clearly Reservation & Booking
+    Management; kept at L1 because the surface is read-only retrieval spanning several sub-capabilities
+    rather than capture or modification specifically.
+- tag: POS
+  spec_file: roomkeypms-pos-api-openapi.yml
+  capability_id: BC-4060.10
+  capability_id_l1: BC-4060
+  capability_name: Front Office Operations
+  confidence: 0.78
+  evidence: POST /hotels/{hotelId}/transactions/roomcharges  postRoomCharge  Post a charge to a guest
+    folio; GET /hotels/{hotelId}/guests/roominquiry  Look up guest/room status for POS
+  reason: Operations look up in-house guests and room status and post outlet charges to the guest folio
+    in a hotel PMS — front-office folio and in-house guest handling. Mapped to Front Office Operations,
+    which covers check-in/check-out and folio settlement; some chance the intended emphasis is F&B outlet
+    charge posting.
