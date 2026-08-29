@@ -19,6 +19,18 @@ description: RoomKeyPMS is a cloud property management system (PMS) for independ
   articles; the exact API base host is inferred from the same documentation
   (RoomKeyPMS hosts its interactive Help/reference pages alongside the live API)
   and should be confirmed once credentials are issued.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve
