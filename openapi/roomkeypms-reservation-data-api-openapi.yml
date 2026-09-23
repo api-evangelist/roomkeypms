@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: RoomKeyPMS POS Reservation Data API
-  description: 'RoomKeyPMS''s REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts. Endpoint paths, parameters, and behavior are taken directly from RoomKeyPMS''s public support documentation and version release notes. The API is partner-gated: an API key and per-hotel credentials are issued only after a hotel''s IT team emails RoomKeyPMS support and the property signs off. Responses can be requested as JSON or XML via the request header. There is no endpoint that returns only records changed since the last call; RoomKeyPMS recommends polling on a 10-15 minute cadence without parallel calls, staggered across properties for multi-property integrations. Date-ranged endpoints are capped at a 60-day window. The exact production base host is not published as a standalone value by RoomKeyPMS; it is inferred here from RoomKeyPMS''s own Help/reference portal and should be confirmed once a partner API key is issued.'
+  title: RoomKeyPMS Reservation Data API
+  description: RoomKeyPMS's REST API for pulling reservation and guest data, posting POS charges to a guest folio, and pulling hotel statistics/receipts.
   version: 2.8.0.2
   contact:
     name: RoomKeyPMS Support
@@ -129,37 +129,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    ApiKeyParam:
-      name: key
-      in: query
-      required: true
-      description: API key for the requesting integration.
-      schema:
-        type: string
-    FromDate:
-      name: fromDate
-      in: query
-      required: true
-      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
-      schema:
-        type: string
-        format: date
-    ToDate:
-      name: toDate
-      in: query
-      required: true
-      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
-      schema:
-        type: string
-        format: date
-    HotelId:
-      name: hotelId
-      in: path
-      required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
-      schema:
-        type: string
   schemas:
     ChannelConfirmation:
       type: object
@@ -171,6 +140,11 @@ components:
           type: string
           example: Booking.com
         confirmationNumber:
+          type: string
+    Error:
+      type: object
+      properties:
+        message:
           type: string
     Reservation:
       type: object
@@ -205,11 +179,37 @@ components:
           description: Channel-partner confirmation numbers, added in API v2.8.0.2.
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
+  parameters:
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
+    FromDate:
+      name: fromDate
+      in: query
+      required: true
+      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
+    ApiKeyParam:
+      name: key
+      in: query
+      required: true
+      description: API key for the requesting integration.
+      schema:
+        type: string
+    ToDate:
+      name: toDate
+      in: query
+      required: true
+      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
   responses:
     Unauthorized:
       description: Missing or invalid API key.
