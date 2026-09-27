@@ -40,16 +40,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ChannelConfirmation:
+    Error:
       type: object
       properties:
-        shortCode:
-          type: string
-          example: BKG
-        name:
-          type: string
-          example: Booking.com
-        confirmationNumber:
+        message:
           type: string
     Receipt:
       type: object
@@ -67,24 +61,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    Error:
+    ChannelConfirmation:
       type: object
       properties:
-        message:
+        shortCode:
+          type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
           type: string
   parameters:
-    HotelId:
-      name: hotelId
-      in: path
-      required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
-      schema:
-        type: string
-    FromDate:
-      name: fromDate
+    ToDate:
+      name: toDate
       in: query
       required: true
-      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
+      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
       schema:
         type: string
         format: date
@@ -95,14 +88,21 @@ components:
       description: API key for the requesting integration.
       schema:
         type: string
-    ToDate:
-      name: toDate
+    FromDate:
+      name: fromDate
       in: query
       required: true
-      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
+      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
       schema:
         type: string
         format: date
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.

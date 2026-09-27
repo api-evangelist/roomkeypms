@@ -88,35 +88,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ChannelConfirmation:
-      type: object
-      properties:
-        shortCode:
-          type: string
-          example: BKG
-        name:
-          type: string
-          example: Booking.com
-        confirmationNumber:
-          type: string
-    RoomInquiry:
-      type: object
-      properties:
-        roomNumber:
-          type: string
-        guestName:
-          type: string
-        inHouse:
-          type: boolean
-        costCentresAvailable:
-          type: array
-          items:
-            type: string
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
     RoomChargeInput:
       type: object
       required:
@@ -132,6 +103,25 @@ components:
           type: number
         description:
           type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    RoomCharge:
+      type: object
+      properties:
+        transactionId:
+          type: string
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        postedAt:
+          type: string
+          format: date-time
     Reservation:
       type: object
       description: A reservation/guest-profile record. Field names are honestly modeled from RoomKeyPMS's documented data categories (guest profile, room and rate, booking source) since RoomKeyPMS's public articles describe the available data but do not publish a full field-level schema.
@@ -165,33 +155,43 @@ components:
           description: Channel-partner confirmation numbers, added in API v2.8.0.2.
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    RoomCharge:
+    ChannelConfirmation:
       type: object
       properties:
-        transactionId:
+        shortCode:
           type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
+    RoomInquiry:
+      type: object
+      properties:
         roomNumber:
           type: string
-        costCentre:
+        guestName:
           type: string
-        amount:
-          type: number
-        postedAt:
-          type: string
-          format: date-time
+        inHouse:
+          type: boolean
+        costCentresAvailable:
+          type: array
+          items:
+            type: string
   parameters:
-    HotelId:
-      name: hotelId
-      in: path
-      required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
-      schema:
-        type: string
     ApiKeyParam:
       name: key
       in: query
       required: true
       description: API key for the requesting integration.
+      schema:
+        type: string
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
       schema:
         type: string
   responses:
