@@ -88,40 +88,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    RoomChargeInput:
-      type: object
-      required:
-      - roomNumber
-      - costCentre
-      - amount
-      properties:
-        roomNumber:
-          type: string
-        costCentre:
-          type: string
-        amount:
-          type: number
-        description:
-          type: string
-    Error:
+    ChannelConfirmation:
       type: object
       properties:
-        message:
+        shortCode:
           type: string
-    RoomCharge:
-      type: object
-      properties:
-        transactionId:
+          example: BKG
+        name:
           type: string
-        roomNumber:
+          example: Booking.com
+        confirmationNumber:
           type: string
-        costCentre:
-          type: string
-        amount:
-          type: number
-        postedAt:
-          type: string
-          format: date-time
     Reservation:
       type: object
       description: A reservation/guest-profile record. Field names are honestly modeled from RoomKeyPMS's documented data categories (guest profile, room and rate, booking source) since RoomKeyPMS's public articles describe the available data but do not publish a full field-level schema.
@@ -155,17 +132,20 @@ components:
           description: Channel-partner confirmation numbers, added in API v2.8.0.2.
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    ChannelConfirmation:
+    RoomCharge:
       type: object
       properties:
-        shortCode:
+        transactionId:
           type: string
-          example: BKG
-        name:
+        roomNumber:
           type: string
-          example: Booking.com
-        confirmationNumber:
+        costCentre:
           type: string
+        amount:
+          type: number
+        postedAt:
+          type: string
+          format: date-time
     RoomInquiry:
       type: object
       properties:
@@ -179,19 +159,39 @@ components:
           type: array
           items:
             type: string
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+    RoomChargeInput:
+      type: object
+      required:
+      - roomNumber
+      - costCentre
+      - amount
+      properties:
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        description:
+          type: string
   parameters:
-    ApiKeyParam:
-      name: key
-      in: query
-      required: true
-      description: API key for the requesting integration.
-      schema:
-        type: string
     HotelId:
       name: hotelId
       in: path
       required: true
       description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
+    ApiKeyParam:
+      name: key
+      in: query
+      required: true
+      description: API key for the requesting integration.
       schema:
         type: string
   responses:

@@ -40,6 +40,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    ChannelConfirmation:
+      type: object
+      properties:
+        shortCode:
+          type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
     Error:
       type: object
       properties:
@@ -61,17 +72,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    ChannelConfirmation:
-      type: object
-      properties:
-        shortCode:
-          type: string
-          example: BKG
-        name:
-          type: string
-          example: Booking.com
-        confirmationNumber:
-          type: string
   parameters:
     ToDate:
       name: toDate
@@ -81,11 +81,11 @@ components:
       schema:
         type: string
         format: date
-    ApiKeyParam:
-      name: key
-      in: query
+    HotelId:
+      name: hotelId
+      in: path
       required: true
-      description: API key for the requesting integration.
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
       schema:
         type: string
     FromDate:
@@ -96,11 +96,11 @@ components:
       schema:
         type: string
         format: date
-    HotelId:
-      name: hotelId
-      in: path
+    ApiKeyParam:
+      name: key
+      in: query
       required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      description: API key for the requesting integration.
       schema:
         type: string
   responses:
