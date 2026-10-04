@@ -180,19 +180,11 @@ components:
         message:
           type: string
   parameters:
-    ToDate:
-      name: toDate
+    ApiKeyParam:
+      name: key
       in: query
       required: true
-      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
-      schema:
-        type: string
-        format: date
-    HotelId:
-      name: hotelId
-      in: path
-      required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      description: API key for the requesting integration.
       schema:
         type: string
     FromDate:
@@ -203,13 +195,21 @@ components:
       schema:
         type: string
         format: date
-    ApiKeyParam:
-      name: key
-      in: query
+    HotelId:
+      name: hotelId
+      in: path
       required: true
-      description: API key for the requesting integration.
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
       schema:
         type: string
+    ToDate:
+      name: toDate
+      in: query
+      required: true
+      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
   responses:
     Unauthorized:
       description: Missing or invalid API key.
