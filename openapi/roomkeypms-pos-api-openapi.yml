@@ -88,44 +88,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ChannelConfirmation:
+    Error:
       type: object
       properties:
-        shortCode:
-          type: string
-          example: BKG
-        name:
-          type: string
-          example: Booking.com
-        confirmationNumber:
-          type: string
-    RoomInquiry:
-      type: object
-      properties:
-        roomNumber:
-          type: string
-        guestName:
-          type: string
-        inHouse:
-          type: boolean
-        costCentresAvailable:
-          type: array
-          items:
-            type: string
-    RoomChargeInput:
-      type: object
-      required:
-      - roomNumber
-      - costCentre
-      - amount
-      properties:
-        roomNumber:
-          type: string
-        costCentre:
-          type: string
-        amount:
-          type: number
-        description:
+        message:
           type: string
     RoomCharge:
       type: object
@@ -141,6 +107,21 @@ components:
         postedAt:
           type: string
           format: date-time
+    RoomChargeInput:
+      type: object
+      required:
+      - roomNumber
+      - costCentre
+      - amount
+      properties:
+        roomNumber:
+          type: string
+        costCentre:
+          type: string
+        amount:
+          type: number
+        description:
+          type: string
     Reservation:
       type: object
       description: A reservation/guest-profile record. Field names are honestly modeled from RoomKeyPMS's documented data categories (guest profile, room and rate, booking source) since RoomKeyPMS's public articles describe the available data but do not publish a full field-level schema.
@@ -174,11 +155,37 @@ components:
           description: Channel-partner confirmation numbers, added in API v2.8.0.2.
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-    Error:
+    ChannelConfirmation:
       type: object
       properties:
-        message:
+        shortCode:
           type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
+    RoomInquiry:
+      type: object
+      properties:
+        roomNumber:
+          type: string
+        guestName:
+          type: string
+        inHouse:
+          type: boolean
+        costCentresAvailable:
+          type: array
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     ApiKeyParam:
       name: key
@@ -194,13 +201,6 @@ components:
       description: The RoomKeyPMS-assigned identifier for the hotel/property.
       schema:
         type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

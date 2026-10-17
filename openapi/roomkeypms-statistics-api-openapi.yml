@@ -39,18 +39,38 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    FromDate:
+      name: fromDate
+      in: query
+      required: true
+      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
+    ToDate:
+      name: toDate
+      in: query
+      required: true
+      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
+      schema:
+        type: string
+        format: date
+    ApiKeyParam:
+      name: key
+      in: query
+      required: true
+      description: API key for the requesting integration.
+      schema:
+        type: string
+    HotelId:
+      name: hotelId
+      in: path
+      required: true
+      description: The RoomKeyPMS-assigned identifier for the hotel/property.
+      schema:
+        type: string
   schemas:
-    ChannelConfirmation:
-      type: object
-      properties:
-        shortCode:
-          type: string
-          example: BKG
-        name:
-          type: string
-          example: Booking.com
-        confirmationNumber:
-          type: string
     Error:
       type: object
       properties:
@@ -72,37 +92,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChannelConfirmation'
-  parameters:
-    ApiKeyParam:
-      name: key
-      in: query
-      required: true
-      description: API key for the requesting integration.
-      schema:
-        type: string
-    FromDate:
-      name: fromDate
-      in: query
-      required: true
-      description: Start of the date range (local property timezone). Combined with toDate, capped at a 60-day maximum range.
-      schema:
-        type: string
-        format: date
-    HotelId:
-      name: hotelId
-      in: path
-      required: true
-      description: The RoomKeyPMS-assigned identifier for the hotel/property.
-      schema:
-        type: string
-    ToDate:
-      name: toDate
-      in: query
-      required: true
-      description: End of the date range (local property timezone). Combined with fromDate, capped at a 60-day maximum range.
-      schema:
-        type: string
-        format: date
+    ChannelConfirmation:
+      type: object
+      properties:
+        shortCode:
+          type: string
+          example: BKG
+        name:
+          type: string
+          example: Booking.com
+        confirmationNumber:
+          type: string
   responses:
     Unauthorized:
       description: Missing or invalid API key.
