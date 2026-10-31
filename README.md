@@ -1,4 +1,4 @@
-# RoomKeyPMS (roomkeypms)
+# RoomKeyPMS
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,106 +64,121 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-RoomKeyPMS is a cloud property management system (PMS) for independent hotels and small chains across the US and Canada, with a team of hoteliers behind roughly 70,000 managed rooms. Alongside the core PMS it sells Pulse (AI marketing and guest messaging), Embedded Payments, Capital (growth financing), Mobile Guest, a built-in Distribution/CRS module, and an integrations marketplace.
+RoomKeyPMS is a cloud property management system (PMS) for independent hotels and small chains across the US and Canada, with a team of hoteliers behind roughly 70,000 managed rooms. Alongside the core PMS it sells Pulse (AI marketing and guest messaging), Embedded Payments, Capital (growth financing), Mobile Guest, a built-in Distribution/CRS module, and an integrations marketplace. RoomKeyPMS publishes a real REST API (JSON or XML, selectable via request header) documented publicly at its support portal under three API types - Pulling Reservation Data, POS, and Statistics and Forecasts. The API is described as "a one-way interface that allows you to draw out key data from your hotel or chain environment" for use in marketing (e.g. exporting guest lists to MailChimp) and BI tools (e.g. Cvent). It is partner-gated - a hotel's IT team must email RoomKeyPMS support and the property must sign off before an API key and per-hotel credentials are issued - so no open self-serve signup or public sandbox exists. Endpoint paths and query parameters below are taken directly from RoomKeyPMS's own published support articles; the exact API base host is inferred from the same documentation (RoomKeyPMS hosts its interactive Help/reference pages alongside the live API) and should be confirmed once credentials are issued.
 
-**API access model (important):** RoomKeyPMS publishes a **real REST API** (JSON or XML, selectable via request header) with endpoint paths, parameters, and behavior **documented publicly** on its support portal under three API types - Pulling Reservation Data, POS, and Statistics and Forecasts. Confirmed endpoints and query parameters are reproduced faithfully below and in `openapi/roomkeypms-openapi.yml`, sourced directly from RoomKeyPMS's own support articles and version release notes. What is **not** open is *access*: there is no self-serve signup or public sandbox. A hotel's IT team must email RoomKeyPMS support and the property must sign off before RoomKeyPMS issues an API key and per-hotel credentials. The exact production API base host is also not published as a standalone value - it is inferred here from RoomKeyPMS's own Help/reference portal and should be confirmed once credentials are issued.
+**Areas:** Hospitality · Hotel Technology · Property Management System · PMS · Reservations · Point-of-Sale · Gated API
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/roomkeypms/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/roomkeypms/refs/heads/main/apis.yml)
+## RoomKeyPMS on APIs.io
 
-## Tags
+Everything profiled for RoomKeyPMS is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/roomkeypms/](https://apis.io/providers/roomkeypms/)** — or go straight to one of the APIs or properties below.
 
-- Hospitality
-- Hotel Technology
-- Property Management System
-- PMS
-- Reservations
-- POS
-- Gated API
+### APIs (3)
 
-## Timestamps
+- [RoomKeyPMS POS API](https://apis.io/apis/roomkeypms/roomkeypms-pos-api/) — Point-of-sale guest lookup and folio charge posting.
+- [RoomKeyPMS Reservation Data API](https://apis.io/apis/roomkeypms/roomkeypms-reservation-data-api/) — Pull reservation and guest-profile data by hotel.
+- [RoomKeyPMS Statistics API](https://apis.io/apis/roomkeypms/roomkeypms-statistics-api/) — Hotel statistics and transaction receipts.
 
-- **Created:** 2026-07-03
-- **Modified:** 2026-07-03
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### RoomKeyPMS Reservation Data API
+#### Agentic access (1)
 
-Pull reservation and guest-profile data by hotel - arrival-based reservations, real-time in-house guests, checked-out guests, cancellations, and reserved-but-not-yet-arrived bookings - each including name, address, email preferences, length of stay, booking source, room/rate, and (since API v2.8.0.2) confirmation numbers from OTA/channel partners (Booking.com, Expedia, TravelClick, SynXis, and others).
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data](https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data)
-- **Base URL:** `https://www.welcometorsi.net/RoomkeyApi/api`
+- [Roomkeypms Agentic Access](https://apis.io/agentic-access/roomkeypms/roomkeypms-agentic-access/)
 
-#### Confirmed Endpoints
+#### Collections (3)
 
-- `GET /hotels/{hotelId}/reservations/guestprofile` - reservations by arrival date (`key`, `fromDate`, `toDate`; max 60-day range)
-- `GET /hotels/{hotelId}/reservations/guestprofile/inhouse` - real-time in-house guest list (`key`)
-- `GET /hotels/{hotelId}/reservations/guestprofile/checkedout` - checked-out guests (`key`, `fromDate`, `toDate`; max 60-day range)
-- `GET /hotels/{hotelId}/reservations/guestprofile/cancellations` - cancelled reservations (`key`, `fromDate`, `toDate`)
-- `GET /hotels/{hotelId}/reservations/guestprofile/reserved` - reserved, not-yet-arrived reservations (`key`, `fromDate`, `toDate`)
+Postman and Open Collection request collections.
 
-There is no endpoint that returns only records changed since the last call. RoomKeyPMS recommends polling every 10-15 minutes, never in parallel, staggered across properties.
+- [RoomKeyPMS POS API](https://apis.io/collections/roomkeypms/open-roomkeypms-pos-api/)
+- [RoomKeyPMS POS Reservation Data API](https://apis.io/collections/roomkeypms/open-roomkeypms-reservation-data-api/)
+- [RoomKeyPMS POS Statistics API](https://apis.io/collections/roomkeypms/open-roomkeypms-statistics-api/)
 
-#### Properties
+#### Security (3)
 
-- [Documentation](https://support.roomkeypms.com/a/972656-api-documentation)
-- [API Reference](https://support.roomkeypms.com/a/1919225-api-type-pulling-reservation-data)
-- [OpenAPI](openapi/roomkeypms-openapi.yml) - [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+Authentication, trust centre, and vulnerability disclosure.
 
-### RoomKeyPMS POS Integration API
+- [Roomkeypms Authentication](https://apis.io/security/roomkeypms/roomkeypms-authentication/)
+- [Roomkeypms Domain Security](https://apis.io/security/roomkeypms/roomkeypms-domain-security/)
+- [Roomkeypms Vulnerability Disclosure](https://apis.io/security/roomkeypms/roomkeypms-vulnerability-disclosure/)
 
-Lets a third-party point-of-sale system (restaurant, retail, spa) look up a guest by room number and post a charge to that guest's folio, so on-property spend outside the PMS lands on the guest's bill. Charge posting requires a configured CostCentre per property and is subject to per-guest credit-limit and payment-method rules.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://support.roomkeypms.com/a/1687788-api-type-pos](https://support.roomkeypms.com/a/1687788-api-type-pos)
-- **Base URL:** `https://www.welcometorsi.net/RoomkeyApi/api`
+Published plans, tiers and prices.
 
-#### Confirmed Endpoints
+- [Roomkeypms Plans Pricing](https://apis.io/plans/roomkeypms/roomkeypms-plans-pricing/)
 
-- `GET /hotels/{hotelId}/guests/roominquiry` - guest/room lookup by room number (`key`, `roomNumber`)
-- `POST /hotels/{hotelId}/transactions/roomcharges` - post a charge to a guest folio (`key`)
-- `GET /hotels/{hotelId}/reservations/guestprofile/inhouse` - shared in-house guest list, used to validate room/guest before posting
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://support.roomkeypms.com/a/972656-api-documentation)
-- [API Reference](https://support.roomkeypms.com/a/1687788-api-type-pos)
-- [OpenAPI](openapi/roomkeypms-openapi.yml) - [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Roomkeypms Rate Limits](https://apis.io/rate-limits/roomkeypms/roomkeypms-rate-limits/)
 
-### RoomKeyPMS Statistics and Forecasts API
+#### FinOps (1)
 
-Exposes hotel-level statistics for business-intelligence use. The only sub-path confirmed in RoomKeyPMS's public release notes is the receipts endpoint, returning transaction records (date, amount, details, transaction time) for a hotel over a date range. RoomKeyPMS's marketing describes broader ADR, occupancy, and forecast data as part of this API type, but exact sub-paths beyond receipts are not reproduced in public support articles (`endpointsModeled` for that portion).
+What the API costs to run, by operation.
 
-- **Human URL:** [https://support.roomkeypms.com/m/55959/c/261470](https://support.roomkeypms.com/m/55959/c/261470)
-- **Base URL:** `https://www.welcometorsi.net/RoomkeyApi/api`
+- [Roomkeypms Finops](https://apis.io/finops/roomkeypms/roomkeypms-finops/)
 
-#### Confirmed Endpoints
+## Where to find this API
 
-- `GET /hotels/{hotelId}/statistics/receipts` - transaction receipts (`key`, `fromDate`, `toDate`; adds `ReservationUniqueID` per channel-partner integration since v2.8.0.2)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://support.roomkeypms.com/a/972656-api-documentation)
-- [API Reference](https://support.roomkeypms.com/m/55959/c/261470)
-- [OpenAPI](openapi/roomkeypms-openapi.yml) - [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [LinkedIn](https://ca.linkedin.com/company/roomkeypms)
 - [Website](https://roomkeypms.com/)
 - [Documentation](https://support.roomkeypms.com/a/972656-api-documentation)
-- [Plans](plans/roomkeypms-plans-pricing.yml)
-- [Rate Limits](rate-limits/roomkeypms-rate-limits.yml)
-- [Fin Ops](finops/roomkeypms-finops.yml)
+- [Blog](https://roomkeypms.com/blog/)
 
-## Pricing
+## API Evangelist rating
 
-RoomKeyPMS does not publish self-serve, public list pricing. It is sold as a contract-priced ("user-pay"), quote-based platform sized by property; the API itself carries no separately documented fee and is bundled into the platform subscription once access is granted. See [plans/roomkeypms-plans-pricing.yml](plans/roomkeypms-plans-pricing.yml).
+**Kin Score 26.8** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## WebSocket Review
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 49.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 5.3 |
 
-RoomKeyPMS does not expose a documented public WebSocket API. See [review.yml](review.yml) for the full findings - the API is request/response REST only (JSON or XML), with no Server-Sent Events or WebSocket transport documented anywhere in RoomKeyPMS's public materials.
+**Agent readiness 19.6** — agent-aware
 
-## Maintainers
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Regulatory alignment 17.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/roomkeypms/](https://apis.io/providers/roomkeypms/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for RoomKeyPMS: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/roomkeypms/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
